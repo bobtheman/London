@@ -684,9 +684,19 @@ svg.leaflet-image-layer.leaflet-interactive path {
   th, td { text-align:left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
   th { font-size: 13px; text-transform: uppercase; letter-spacing: .03em; color: var(--quiet); }
   td:first-child { white-space: nowrap; font-weight: 600; }
+  a.walk { color:var(--accent); text-decoration:none; border-bottom:1px solid currentColor; }
+  a.walk:hover { border-bottom-width:2px; }
   .num { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--accent); color:#fff; font-size:13px; font-weight:700; margin-right:6px; }
   .pin { background:var(--accent); color:#fff; border:2px solid #fff; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; box-shadow:0 1px 4px rgba(0,0,0,.35); }
-  .pin.tube { background:#dc241f; border-radius:6px; font-size:11px; }
+  .pin.tube, .pin.babylon { width:42px; height:42px; font-size:20px; border:3px solid #fff; box-shadow:0 0 0 3px var(--ring), 0 3px 10px rgba(0,0,0,.45); animation: pulse 2s ease-in-out infinite; }
+  .pin.tube { background:#dc241f; --ring:#dc241f; border-radius:50%; }
+  .pin.babylon { background:#f2a900; --ring:#f2a900; border-radius:10px; }
+  @keyframes pulse { 50% { box-shadow:0 0 0 9px transparent, 0 3px 10px rgba(0,0,0,.45); } }
+  @media (prefers-reduced-motion: reduce) { .pin.tube, .pin.babylon { animation:none; } }
+  .leaflet-tooltip.big-label { font-weight:700; font-size:14px; padding:4px 8px; border-radius:6px; border:0; color:#fff; box-shadow:0 2px 6px rgba(0,0,0,.35); }
+  .leaflet-tooltip.big-label::before { display:none; }
+  .leaflet-tooltip.tube-label { background:#dc241f; }
+  .leaflet-tooltip.babylon-label { background:#b87f00; }
   .pin.cafe { background:#8a5a2b; width:22px; height:22px; font-size:11px; }
   .pin.music { background:#6b4bb5; width:22px; height:22px; font-size:11px; }
   .legend { font-size: 14px; color: var(--quiet); display:flex; gap:16px; flex-wrap:wrap; margin-bottom:8px; }
@@ -712,7 +722,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <span style="--c:#2f6fd6">Morning route (numbered)</span>
     <span style="--c:#8a5a2b">Breakfast &amp; coffee</span>
     <span style="--c:#6b4bb5">Music &amp; pubs</span>
-    <span style="--c:#dc241f">Tube</span>
+    <span style="--c:#dc241f">Camden Town Tube</span>
+    <span style="--c:#f2a900">Babylon Park London</span>
   </div>
   <div id="map" role="region" aria-label="Map of Camden Town with the morning route"></div>
   <p><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden+Town+Station+London&amp;destination=Buck+Street+Market+London&amp;waypoints=Corretto+by+the+Canal+London%7CCamden+Lock+London%7CPrimrose+Hill+London%7CCamden+Market+London&amp;travelmode=walking" target="_blank" rel="noopener">Open walking route in Google Maps</a></p>
@@ -745,14 +756,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   <h2>Things to see</h2>
   <table>
-    <tr><th>Sight</th><th>Walk</th><th>Notes</th></tr>
-    <tr><td>Camden High Street</td><td>0 min</td><td>The shopfronts are decorated with huge 3D sculptures.</td></tr>
-    <tr><td>Music Walk of Fame</td><td>1 min</td><td>Plaques set into the pavement on Camden High St. Look down or you'll miss them.</td></tr>
-    <tr><td>Buck Street Market</td><td>2 min</td><td>A small market built from shipping containers.</td></tr>
-    <tr><td>Camden Lock and Regent's Canal</td><td>5 min</td><td>Narrowboats going through the twin locks, and the towpath west towards London Zoo and Little Venice.</td></tr>
-    <tr><td>Camden Market</td><td>6 min</td><td>Street food from all over the world, plus vintage and alternative shops. Open daily 10:00–19:00.</td></tr>
-    <tr><td>Regent's Canal Waterbus</td><td>6 min</td><td>A boat trip to Little Venice from the West Yard of Camden Lock Market. The office is open 11:00–17:45. Book ahead.</td></tr>
-    <tr><td>Primrose Hill</td><td>About 20 min</td><td>A free view over the London skyline.</td></tr>
+    <tr><th>Sight (tap for walking directions)</th><th>Walk</th><th>Notes</th></tr>
+    <tr><td><a class="walk" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden%20Town%20Station%2C%20London&amp;destination=Camden%20High%20Street%2C%20London%20NW1&amp;destination_place_id=ChIJez9ZTAAbdkgRGi4rsL3fNfY&amp;travelmode=walking" target="_blank" rel="noopener">Camden High Street <span aria-hidden="true">🚶</span></a></td><td>0 min</td><td>The shopfronts are decorated with huge 3D sculptures.</td></tr>
+    <tr><td><a class="walk" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden%20Town%20Station%2C%20London&amp;destination=Music%20Walk%20of%20Fame%2C%20178%20Camden%20High%20St%2C%20London&amp;destination_place_id=ChIJ7bRfElkbdkgRGS5_6LE9d4w&amp;travelmode=walking" target="_blank" rel="noopener">Music Walk of Fame <span aria-hidden="true">🚶</span></a></td><td>1 min</td><td>Plaques set into the pavement on Camden High St. Look down or you'll miss them.</td></tr>
+    <tr><td><a class="walk" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden%20Town%20Station%2C%20London&amp;destination=Buck%20Street%20Market%2C%202%20Buck%20St%2C%20London&amp;destination_place_id=ChIJ--skXwAbdkgRJ3dyZAfAtlg&amp;travelmode=walking" target="_blank" rel="noopener">Buck Street Market <span aria-hidden="true">🚶</span></a></td><td>2 min</td><td>A small market built from shipping containers.</td></tr>
+    <tr><td><a class="walk" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden%20Town%20Station%2C%20London&amp;destination=Camden%20Lock%2C%20London&amp;destination_place_id=ChIJ9xf7i-YadkgR0xQ9AEnALTw&amp;travelmode=walking" target="_blank" rel="noopener">Camden Lock and Regent's Canal <span aria-hidden="true">🚶</span></a></td><td>5 min</td><td>Narrowboats going through the twin locks, and the towpath west towards London Zoo and Little Venice.</td></tr>
+    <tr><td><a class="walk" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden%20Town%20Station%2C%20London&amp;destination=Camden%20Market%2C%20Camden%20Lock%20Pl%2C%20London&amp;destination_place_id=ChIJSfFEEuQadkgRCO-FF_-eZUc&amp;travelmode=walking" target="_blank" rel="noopener">Camden Market <span aria-hidden="true">🚶</span></a></td><td>6 min</td><td>Street food from all over the world, plus vintage and alternative shops. Open daily 10:00–19:00.</td></tr>
+    <tr><td><a class="walk" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden%20Town%20Station%2C%20London&amp;destination=Babylon%20Park%20London%2C%208%20Castlehaven%20Rd%2C%20London&amp;destination_place_id=ChIJ7_PV980bdkgROekbwOVWVfo&amp;travelmode=walking" target="_blank" rel="noopener">Babylon Park London <span aria-hidden="true">🚶</span></a></td><td>5 min</td><td>Indoor theme park and arcade at 8 Castlehaven Rd. Open Monday 10:00–21:00. Entry is free and you pay per ride; accompanying adults may be charged.</td></tr>
+    <tr><td><a class="walk" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden%20Town%20Station%2C%20London&amp;destination=London%20Waterbus%20Company%2C%20Camden%20Lock%20Market%2C%20London&amp;destination_place_id=ChIJdybLUakadkgR3GqowGCA07o&amp;travelmode=walking" target="_blank" rel="noopener">Regent's Canal Waterbus <span aria-hidden="true">🚶</span></a></td><td>6 min</td><td>A boat trip to Little Venice from the West Yard of Camden Lock Market. The office is open 11:00–17:45. Book ahead.</td></tr>
+    <tr><td><a class="walk" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden%20Town%20Station%2C%20London&amp;destination=Primrose%20Hill%2C%20London%20NW1&amp;travelmode=walking" target="_blank" rel="noopener">Primrose Hill <span aria-hidden="true">🚶</span></a></td><td>About 20 min</td><td>A free view over the London skyline.</td></tr>
   </table>
 
   <h2>If you stay later</h2>
@@ -792,7 +804,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }).addTo(map);
 
   var icon = function (cls, label) {
-    var size = cls === "" ? 28 : 22;
+    var size = (cls === "tube" || cls === "babylon") ? 42 : (cls === "" ? 28 : 22);
     return L.divIcon({ className: "", html: '<div class="pin ' + cls + '">' + label + "</div>", iconSize: [size, size], iconAnchor: [size / 2, size / 2] });
   };
   var add = function (lat, lng, cls, label, name, text) {
@@ -801,7 +813,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
       .addTo(map);
   };
 
-  add(51.5392, -0.1426, "tube", "⊖", "Camden Town Station", "Start here at 08:30.");
+  var feature = function (lat, lng, cls, label, name, text, dir) {
+    L.marker([lat, lng], { icon: icon(cls, label), title: name, zIndexOffset: 1000 })
+      .bindPopup("<strong>" + name + "</strong><br>" + text + '<br><a href="' + gm(name) + '" target="_blank" rel="noopener">Open in Google Maps</a>')
+      .bindTooltip(name, { permanent: true, direction: dir, offset: dir === "right" ? [24, 0] : [-24, 0], className: "big-label " + cls + "-label" })
+      .addTo(map);
+  };
 
   var route = [
     [51.54196, -0.14288, "Corretto by the Canal", "08:30 · Brunch beside the canal."],
@@ -832,6 +849,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     [51.5349, -0.1385, "KOKO", "Grand old theatre turned music venue."],
     [51.5432, -0.1519, "Roundhouse", "Former engine shed, major venue."]
   ].forEach(function (m) { add(m[0], m[1], "music", "♪", m[2], m[3]); });
+
+  feature(51.5392, -0.1426, "tube", "⊖", "Camden Town Tube", "Northern line. Start here at 08:30.", "right");
+  feature(51.54222, -0.14493, "babylon", "🎢", "Babylon Park London", "8 Castlehaven Rd · Indoor theme park and arcade · Mon 10:00–21:00 · Free entry, pay per ride.", "right");
 })();
 </script>
 </body>
