@@ -727,7 +727,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   </div>
   <div id="map" role="region" aria-label="Map of Camden Town with the morning route"></div>
   <p><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Camden+Town+Station+London&amp;destination=Buck+Street+Market+London&amp;waypoints=Corretto+by+the+Canal+London%7CCamden+Lock+London%7CPrimrose+Hill+London%7CCamden+Market+London&amp;travelmode=walking" target="_blank" rel="noopener">Open walking route in Google Maps</a></p>
-  <p class="note">Tap any pin for details. The dashed line links the stops in order; it isn't the exact walking path.</p>
+  <p class="note">Zoom with the + and − buttons, pinch on a phone, or click the map and then use your mouse wheel. Tap any pin for details. The dashed line links the stops in order; it isn't the exact walking path.</p>
 
   <h2>Suggested morning route</h2>
   <p>This route takes about three and a half hours on foot, and it ends back near the station.</p>
@@ -797,7 +797,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     return;
   }
   var gm = function (q) { return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q + ", Camden, London"); };
-  var map = L.map("map", { scrollWheelZoom: false }).setView([51.5395, -0.1490], 15);
+  var map = L.map("map", { scrollWheelZoom: false, zoomSnap: 0.5, minZoom: 13, maxZoom: 19 }).setView([51.5395, -0.1490], 15);
+  map.on("click focus", function () { map.scrollWheelZoom.enable(); });
+  map.getContainer().addEventListener("mouseleave", function () { map.scrollWheelZoom.disable(); });
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -816,7 +818,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   var feature = function (lat, lng, cls, label, name, text, dir) {
     L.marker([lat, lng], { icon: icon(cls, label), title: name, zIndexOffset: 1000 })
       .bindPopup("<strong>" + name + "</strong><br>" + text + '<br><a href="' + gm(name) + '" target="_blank" rel="noopener">Open in Google Maps</a>')
-      .bindTooltip(name, { permanent: true, direction: dir, offset: dir === "right" ? [24, 0] : [-24, 0], className: "big-label " + cls + "-label" })
+      .bindTooltip(name, { permanent: true, direction: dir, offset: dir === "right" ? [24, 0] : dir === "top" ? [0, -24] : [-24, 0], className: "big-label " + cls + "-label" })
       .addTo(map);
   };
 
@@ -851,7 +853,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   ].forEach(function (m) { add(m[0], m[1], "music", "♪", m[2], m[3]); });
 
   feature(51.5392, -0.1426, "tube", "⊖", "Camden Town Tube", "Northern line. Start here at 08:30.", "right");
-  feature(51.54222, -0.14493, "babylon", "🎢", "Babylon Park London", "8 Castlehaven Rd · Indoor theme park and arcade · Mon 10:00–21:00 · Free entry, pay per ride.", "right");
+  feature(51.54222, -0.14493, "babylon", "🎢", "Babylon Park London", "8 Castlehaven Rd · Indoor theme park and arcade · Mon 10:00–21:00 · Free entry, pay per ride.", "top");
 })();
 </script>
 </body>
